@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+- updated dependencies and added some configurations
+
+# Original Lib
 ## v 1.0.3
 
 - Fix warnings.
