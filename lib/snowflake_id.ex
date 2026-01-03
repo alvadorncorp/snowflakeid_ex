@@ -1,14 +1,19 @@
-defmodule Snowflake do
+defmodule SnowflakeID do
   @moduledoc """
   Generates Snowflake IDs
   """
   use Application
 
   def start(_type, _args) do
-    import Supervisor.Spec
+    epoch = SnowflakeID.Helper.epoch()
+    timestamp_bits = SnowflakeID.Helper.timestamp_bits()
+    machine_id = SnowflakeID.Helper.machine_id(timestamp_bits)
 
     children = [
-      worker(Snowflake.Generator, [Snowflake.Helper.epoch(), Snowflake.Helper.machine_id()])
+      %{
+        id: SnowflakeID.Generator,
+        start: {SnowflakeID.Generator, :start_link, [epoch, machine_id, timestamp_bits]}
+      }
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)
@@ -18,10 +23,11 @@ defmodule Snowflake do
   Generates a snowflake ID, each call is guaranteed to return a different ID
   that is sequantially larger than the previous ID.
   """
-  @spec next_id() :: {:ok, integer} |
-                     {:error, :backwards_clock}
+  @spec next_id() ::
+          {:ok, integer}
+          | {:error, :backwards_clock}
   def next_id() do
-    GenServer.call(Snowflake.Generator, :next_id)
+    GenServer.call(SnowflakeID.Generator, :next_id)
   end
 
   @doc """
@@ -29,7 +35,7 @@ defmodule Snowflake do
   """
   @spec machine_id() :: {:ok, integer}
   def machine_id() do
-    GenServer.call(Snowflake.Generator, :machine_id)
+    GenServer.call(SnowflakeID.Generator, :machine_id)
   end
 
   @doc """
@@ -37,6 +43,6 @@ defmodule Snowflake do
   """
   @spec set_machine_id(integer) :: {:ok, integer}
   def set_machine_id(machine_id) do
-    GenServer.call(Snowflake.Generator, {:set_machine_id, machine_id})
+    GenServer.call(SnowflakeID.Generator, {:set_machine_id, machine_id})
   end
 end

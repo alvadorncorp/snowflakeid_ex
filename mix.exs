@@ -1,20 +1,20 @@
-defmodule Snowflake.Mixfile do
+defmodule SnowflakeID.Mixfile do
   use Mix.Project
 
-  @version "1.0.4"
-  @url "https://github.com/blitzstudios/snowflake"
-  @maintainers ["Weixi Yen"]
+  @version "1.0.0"
+  @url "https://github.com/alvadorncorp/snowflakeid_ex"
+  @maintainers ["Igor Sant'Ana"]
 
   def project do
     [
-      name: "Snowflake",
-      app: :snowflake,
+      name: "SnowflakeID",
+      app: :snowflake_id,
       version: @version,
       source_url: @url,
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       maintainers: @maintainers,
-      description: "Elixir Snowflake ID Generator",
+      description: "Elixir SnowflakeID Generator",
       elixir: "~> 1.3",
       package: package(),
       homepage_url: @url,
@@ -24,15 +24,14 @@ defmodule Snowflake.Mixfile do
   end
 
   def application do
-    [applications: [],
-     mod: {Snowflake, []}]
+    [applications: [], mod: {SnowflakeID, []}]
   end
 
   defp deps do
     [
-      {:dialyxir, "~> 0.4", only: :dev, runtime: false},
-      {:benchee, "~> 0.6", only: :dev},
-      {:ex_doc, "~> 0.14", only: :dev}
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false},
+      {:benchee, "~> 1.5", only: :dev},
+      {:ex_doc, "~> 0.39", only: :dev}
     ]
   end
 
