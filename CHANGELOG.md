@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1
+- updated documentations and old library name
+
 ## 1.0.0
 - updated dependencies and added some configurations
 

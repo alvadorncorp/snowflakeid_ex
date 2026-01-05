@@ -1,7 +1,7 @@
 defmodule SnowflakeID.Mixfile do
   use Mix.Project
 
-  @version "1.0.0"
+  @version "1.0.1"
   @url "https://github.com/alvadorncorp/snowflakeid_ex"
   @maintainers ["Igor Sant'Ana"]
   @elixir_requirement "~> 1.15"
