@@ -4,14 +4,14 @@ defmodule SnowflakeID.UtilTest do
   @epoch 1_000
 
   setup do
-    original_env = Application.get_all_env(:snowflake_id)
+    original_env = Application.get_all_env(:snowflakeid_ex)
 
     on_exit(fn ->
-      Application.get_all_env(:snowflake_id)
-      |> Enum.each(fn {key, _} -> Application.delete_env(:snowflake_id, key) end)
+      Application.get_all_env(:snowflakeid_ex)
+      |> Enum.each(fn {key, _} -> Application.delete_env(:snowflakeid_ex, key) end)
 
       Enum.each(original_env, fn {key, value} ->
-        Application.put_env(:snowflake_id, key, value)
+        Application.put_env(:snowflakeid_ex, key, value)
       end)
     end)
 
@@ -20,7 +20,7 @@ defmodule SnowflakeID.UtilTest do
 
   test "timestamp_of_id respects configured layout" do
     timestamp_bits = 51
-    Application.put_env(:snowflake_id, :timestamp_bits, timestamp_bits)
+    Application.put_env(:snowflakeid_ex, :timestamp_bits, timestamp_bits)
 
     ts = 123
     machine_bits = SnowflakeID.Helper.machine_id_bits(timestamp_bits)
@@ -36,8 +36,8 @@ defmodule SnowflakeID.UtilTest do
 
   test "first_snowflake_for_timestamp zeroes machine and sequence bits" do
     timestamp_bits = 41
-    Application.put_env(:snowflake_id, :timestamp_bits, timestamp_bits)
-    Application.put_env(:snowflake_id, :epoch, @epoch)
+    Application.put_env(:snowflakeid_ex, :timestamp_bits, timestamp_bits)
+    Application.put_env(:snowflakeid_ex, :epoch, @epoch)
 
     target = @epoch + 500
     id = SnowflakeID.Util.first_snowflake_for_timestamp(target)
@@ -53,8 +53,8 @@ defmodule SnowflakeID.UtilTest do
 
   test "real_timestamp_of_id adds epoch" do
     timestamp_bits = 41
-    Application.put_env(:snowflake_id, :timestamp_bits, timestamp_bits)
-    Application.put_env(:snowflake_id, :epoch, @epoch)
+    Application.put_env(:snowflakeid_ex, :timestamp_bits, timestamp_bits)
+    Application.put_env(:snowflakeid_ex, :epoch, @epoch)
 
     ts = 200
     machine_bits = SnowflakeID.Helper.machine_id_bits(timestamp_bits)
