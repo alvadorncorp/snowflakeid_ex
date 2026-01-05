@@ -14,13 +14,13 @@ In your mix.exs file:
 
 ```elixir
 def deps do
-  [{:snowflake_id, "~> 1.0.0"}]
+  [{:snowflakeid_ex, "~> 1.0.0"}]
 end
 ```
 
 ```elixir
 def application do
-  [applications: [:snowflake_id]]
+  [applications: [:snowflakeid_ex]]
 end
 ```
 
@@ -31,8 +31,8 @@ Specify the nodes in your config.  If you're running a cluster, specify all the 
 - **timestamp_bits** defines how many bits of the 64-bit snowflake are reserved for the timestamp (min 41, max 51; the remaining `64 - 12 - timestamp_bits` bits are used for machine ids)
 - There should be no more than 1 snowflake generator per node, or you risk potential duplicate snowflakes on the same node.
 
-```
-config :snowflake_id,
+```elixir
+config :snowflakeid_ex,
   nodes: ["127.0.0.1", :'nonode@nohost'],   # limited by machine_id bits (2^(64-12-timestamp_bits))
   epoch: 1142974214000,  # don't change after you decide what your epoch is
   timestamp_bits: 42     # clamp between 41 and 51 bits (fewer bits => more nodes)
@@ -44,7 +44,7 @@ Alternatively, you can specify a specific machine_id
 
 
 ```elixir
-config :snowflake_id,
+config :snowflakeid_ex,
   machine_id: 23,   # values must be within 0..machine_id_max(timestamp_bits)
   epoch: 1142974214000  # don't change after you decide what your epoch is
 ```

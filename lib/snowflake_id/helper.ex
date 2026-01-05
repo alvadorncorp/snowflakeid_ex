@@ -18,7 +18,7 @@ defmodule SnowflakeID.Helper do
   """
   @spec epoch() :: integer
   def epoch() do
-    Application.get_env(:snowflake_id, :epoch) || @default_config[:epoch]
+    Application.get_env(:snowflakeid_ex, :epoch) || @default_config[:epoch]
   end
 
   @doc """
@@ -26,7 +26,7 @@ defmodule SnowflakeID.Helper do
   """
   @spec timestamp_bits() :: pos_integer
   def timestamp_bits() do
-    Application.get_env(:snowflake_id, :timestamp_bits, @default_config[:timestamp_bits])
+    Application.get_env(:snowflakeid_ex, :timestamp_bits, @default_config[:timestamp_bits])
     |> clamp_timestamp_bits()
   end
 
@@ -71,12 +71,12 @@ defmodule SnowflakeID.Helper do
     normalized_bits = clamp_timestamp_bits(timestamp_bits)
     max_machine_id = machine_id_max(normalized_bits)
 
-    configured_id = Application.get_env(:snowflake_id, :machine_id)
+    configured_id = Application.get_env(:snowflakeid_ex, :machine_id)
     machine_id(configured_id, normalized_bits, max_machine_id)
   end
 
   defp machine_id(nil, _timestamp_bits, max_machine_id) do
-    nodes = Application.get_env(:snowflake_id, :nodes, @default_config[:nodes])
+    nodes = Application.get_env(:snowflakeid_ex, :nodes, @default_config[:nodes])
     host_addrs = [hostname(), fqdn(), Node.self()] ++ ip_addrs()
 
     with [matching_node] <-

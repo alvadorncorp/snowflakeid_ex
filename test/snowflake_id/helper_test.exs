@@ -2,14 +2,14 @@ defmodule SnowflakeID.HelperTest do
   use ExUnit.Case, async: false
 
   setup do
-    original_env = Application.get_all_env(:snowflake_id)
+    original_env = Application.get_all_env(:snowflakeid_ex)
 
     on_exit(fn ->
-      Application.get_all_env(:snowflake_id)
-      |> Enum.each(fn {key, _} -> Application.delete_env(:snowflake_id, key) end)
+      Application.get_all_env(:snowflakeid_ex)
+      |> Enum.each(fn {key, _} -> Application.delete_env(:snowflakeid_ex, key) end)
 
       Enum.each(original_env, fn {key, value} ->
-        Application.put_env(:snowflake_id, key, value)
+        Application.put_env(:snowflakeid_ex, key, value)
       end)
     end)
 
@@ -18,12 +18,12 @@ defmodule SnowflakeID.HelperTest do
 
   describe "timestamp_bits/0" do
     test "enforces minimum of 41 bits" do
-      Application.put_env(:snowflake_id, :timestamp_bits, 10)
+      Application.put_env(:snowflakeid_ex, :timestamp_bits, 10)
       assert SnowflakeID.Helper.timestamp_bits() == 41
     end
 
     test "enforces maximum derived from layout" do
-      Application.put_env(:snowflake_id, :timestamp_bits, 100)
+      Application.put_env(:snowflakeid_ex, :timestamp_bits, 100)
       assert SnowflakeID.Helper.timestamp_bits() == 51
     end
   end
@@ -40,18 +40,18 @@ defmodule SnowflakeID.HelperTest do
 
   describe "machine_id/1" do
     test "clamps configured machine id to maximum" do
-      Application.put_env(:snowflake_id, :timestamp_bits, 51)
-      Application.put_env(:snowflake_id, :machine_id, 99)
+      Application.put_env(:snowflakeid_ex, :timestamp_bits, 51)
+      Application.put_env(:snowflakeid_ex, :machine_id, 99)
       assert SnowflakeID.Helper.machine_id(51) == 1
     end
 
     test "derives from nodes when within range" do
-      Application.put_env(:snowflake_id, :nodes, [Node.self()])
+      Application.put_env(:snowflakeid_ex, :nodes, [Node.self()])
       assert SnowflakeID.Helper.machine_id(41) == 0
     end
 
     test "falls back to max when derived index exceeds available bits" do
-      Application.put_env(:snowflake_id, :nodes, [:one, :two, Node.self()])
+      Application.put_env(:snowflakeid_ex, :nodes, [:one, :two, Node.self()])
       assert SnowflakeID.Helper.machine_id(51) == 1
     end
   end

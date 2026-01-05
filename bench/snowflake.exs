@@ -1,4 +1,4 @@
-Application.ensure_all_started(:snowflake_id)
+Application.ensure_all_started(:snowflakeid_ex)
 
 # To test against snowflakex, uncomment the second line in the benchmark
 # and also add snowflakex as a dependency to your mix.exs
