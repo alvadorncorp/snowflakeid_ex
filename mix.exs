@@ -4,6 +4,7 @@ defmodule SnowflakeID.Mixfile do
   @version "1.0.0"
   @url "https://github.com/alvadorncorp/snowflakeid_ex"
   @maintainers ["Igor Sant'Ana"]
+  @elixir_requirement "~> 1.8"
 
   def project do
     [
@@ -15,7 +16,7 @@ defmodule SnowflakeID.Mixfile do
       start_permanent: Mix.env() == :prod,
       maintainers: @maintainers,
       description: "Elixir SnowflakeID Generator",
-      elixir: "~> 1.3",
+      elixir: @elixir_requirement,
       package: package(),
       homepage_url: @url,
       docs: docs(),
@@ -29,7 +30,6 @@ defmodule SnowflakeID.Mixfile do
 
   defp deps do
     [
-      {:dialyxir, "~> 1.4", only: :dev, runtime: false},
       {:benchee, "~> 1.5", only: :dev},
       {:ex_doc, "~> 0.39", only: :dev}
     ]
