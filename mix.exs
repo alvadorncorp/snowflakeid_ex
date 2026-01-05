@@ -9,7 +9,7 @@ defmodule SnowflakeID.Mixfile do
   def project do
     [
       name: "SnowflakeID",
-      app: :snowflake_id,
+      app: :snowflakeid_ex,
       version: @version,
       source_url: @url,
       build_embedded: Mix.env() == :prod,
@@ -25,7 +25,10 @@ defmodule SnowflakeID.Mixfile do
   end
 
   def application do
-    [applications: [], mod: {SnowflakeID, []}]
+    [
+      extra_applications: [],
+      mod: {SnowflakeID, []}
+    ]
   end
 
   defp deps do
