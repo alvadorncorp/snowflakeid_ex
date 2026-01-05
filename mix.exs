@@ -4,7 +4,7 @@ defmodule SnowflakeID.Mixfile do
   @version "1.0.0"
   @url "https://github.com/alvadorncorp/snowflakeid_ex"
   @maintainers ["Igor Sant'Ana"]
-  @elixir_requirement "~> 1.8"
+  @elixir_requirement "~> 1.15"
 
   def project do
     [
